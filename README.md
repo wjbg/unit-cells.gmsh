@@ -4,11 +4,31 @@ This repository contains Gmsh scripts for generating Representative Volume Eleme
 
 ## Project Structure
 
-- `2D_structured_symmetric_quarter_fiber.geo`: High-quality transfinite (mapped) mesh. Symmetric distribution between top and right boundaries.
-- `3D_structured_symmetric_quarter_fiber.geo`: Extruded version of the structured 2D mesh.
-- `2D_unstructured_quarter_fiber.geo`: Unstructured mesh designed for flow simulations with local refinement in high-shear zones.
-- `generate_meshes.sh`: Automation script for batch generating unstructured meshes across various volume fractions.
-- `structured_symmetric_quarter_fiber.svg`: Visual representation of the geometry.
+### 1. Structured Symmetric Meshes
+These files are designed for high-precision simulations where a perfectly regular, mapped mesh is required.
+- **`2D_structured_symmetric_quarter_fiber.geo`**: 
+    - **Strategy**: Uses `Transfinite` curves and surfaces.
+    - **Symmetry**: The mesh distribution on the top boundary is a mirror image of the right boundary.
+    - **Elements**: Primarily triangles (can be recombined into quadrilaterals by uncommenting the `Recombine` command).
+- **`3D_structured_symmetric_quarter_fiber.geo`**: 
+    - **Strategy**: Extrusion of the 2D structured face along the Z-axis.
+    - **Layers**: Controlled by the `nz` parameter (default: 10).
+    - **Volume**: Creates structured prisms/hexahedra.
+
+### 2. Unstructured Flow Meshes
+Designed specifically for fluid dynamics (CFD) where shear rates vary across the domain.
+- **`2D_unstructured_quarter_fiber.geo`**:
+    - **Strategy**: Unstructured Frontal-Delaunay algorithm.
+    - **Refinement**: Features a dynamic gradient refinement. The mesh is finest at the narrowest gap (top-left) and coarsens as the gap increases (towards the right) and as you move away from the high-shear boundary.
+    - **Physical Groups**:
+        - `Top_Velocity_BC`: The top boundary where velocity is applied.
+        - `Fiber_Boundary`: The quarter-circle representing the no-slip fiber surface.
+        - `Walls_Symmetry`: The left, right, and bottom boundaries.
+        - `Fluid_Domain`: The entire 2D surface.
+
+### 3. Automation & Assets
+- **`generate_meshes.sh`**: A utility script to sweep through different volume fractions (`vf`) while maintaining a constant number of elements (`n`) in the gap.
+- **`structured_symmetric_quarter_fiber.svg`**: Geometric schematic of the RVE.
 
 ## Getting Started
 
