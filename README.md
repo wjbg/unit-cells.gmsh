@@ -21,9 +21,11 @@ Designed specifically for fluid dynamics (CFD) where shear rates vary across the
     - **Strategy**: Unstructured Frontal-Delaunay algorithm.
     - **Refinement**: Features a dynamic gradient refinement. The mesh is finest at the narrowest gap (top-left) and coarsens as the gap increases (towards the right) and as you move away from the high-shear boundary.
     - **Physical Groups**:
-        - `Top_Velocity_BC`: The top boundary where velocity is applied.
-        - `Fiber_Boundary`: The quarter-circle representing the no-slip fiber surface.
-        - `Walls_Symmetry`: The left, right, and bottom boundaries.
+        - `Top`: The top boundary where velocity is typically applied.
+        - `Fiber`: The quarter-circle representing the fiber surface.
+        - `Bottom`: The bottom domain boundary.
+        - `Left`: The left domain boundary.
+        - `Right`: The right domain boundary.
         - `Fluid_Domain`: The entire 2D surface.
 
 ### 3. Automation & Assets
