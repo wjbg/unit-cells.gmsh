@@ -81,8 +81,8 @@ Field[2].F = Sprintf("min(%g, %g + (x/%g)*(%g-%g) + F1*1.5)", lc_global, lc_refi
 Background Field = 2;
 
 // --- Physical Groups ---
-Physical Point("Top_points") = {2, 3};
-Physical Point("Bot_points") = {4, 5, 6};
+Physical Point("Top") = {2, 3};
+Physical Point("Bottom") = {4, 5, 6};
 Physical Curve("Top") = {2};
 Physical Curve("Bottom") = {4, 5};
 Physical Curve("Left") = {1};

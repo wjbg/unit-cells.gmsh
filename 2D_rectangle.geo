@@ -42,9 +42,11 @@ Transfinite Curve{2, 4} = ny;
 Transfinite Surface{1} = {1, 2, 3, 4};
 
 // Recombine triangles to generate a quadrilateral mesh
-Recombine Surface{1};
+// Recombine Surface{1};
 
 // --- Physical Groups ---
+Physical Point("Top") = {3, 4};
+Physical Point("Bottom") = {1, 2};
 Physical Curve("Bottom") = {1};
 Physical Curve("Right") = {2};
 Physical Curve("Top") = {3};

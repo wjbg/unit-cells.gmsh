@@ -92,7 +92,8 @@ Field[2].F = Sprintf("min(%g, %g + F1 * 0.5)", lc_global, lc_refine);
 Background Field = 2;
 
 // --- Physical Groups ---
-Physical Point("Corners") = {1, 3, 5, 7};
+Physical Point("Top") = {5, 6, 8};
+Physical Point("Bottom") = {1, 2, 4};
 Physical Curve("Bottom") = {1, 2};
 Physical Curve("Right") = {3};
 Physical Curve("Top") = {4, 5};
