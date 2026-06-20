@@ -14,19 +14,42 @@ These files are designed for high-precision simulations where a perfectly regula
     - **Strategy**: Extrusion of the 2D structured face along the Z-axis.
     - **Layers**: Controlled by the `nz` parameter (default: 10).
     - **Volume**: Creates structured prisms/hexahedra.
-
+- **`2D_rectangle.geo`**:
+    - **Strategy**: Simple transfinite (structured) quadrilateral mesh of a rectangular domain.
+    - **Dimensions**: Height $H = 10\,\mu\text{m}$, Width $W = 0.1 \times H$.
+    - **Physical Groups**:
+        - `Top`: Top boundary line.
+        - `Bottom`: Bottom boundary line.
+        - `Left`: Left boundary line.
+        - `Right`: Right boundary line.
+        - `Fluid_Domain`: The 2D domain surface.
 ### 2. Unstructured Flow Meshes
 Designed specifically for fluid dynamics (CFD) where shear rates vary across the domain.
 - **`2D_unstructured_quarter_fiber.geo`**:
-    - **Strategy**: Unstructured Frontal-Delaunay algorithm.
-    - **Refinement**: Features a dynamic gradient refinement. The mesh is finest at the narrowest gap (top-left) and coarsens as the gap increases (towards the right) and as you move away from the high-shear boundary.
+    - **Strategy**: Unstructured Frontal-Delaunay algorithm representing square packing with a quarter-fiber.
     - **Physical Groups**:
-        - `Top`: The top boundary where velocity is typically applied.
-        - `Fiber`: The quarter-circle representing the fiber surface.
-        - `Bottom`: The bottom domain boundary.
-        - `Left`: The left domain boundary.
-        - `Right`: The right domain boundary.
-        - `Fluid_Domain`: The entire 2D surface.
+        - `Top`: The top boundary.
+        - `Bottom`: Bottom boundary + bottom-left fiber arc.
+        - `Left`: Left boundary.
+        - `Right`: Right boundary.
+        - `Fluid_Domain`: The 2D flow surface.
+- **`2D_unstructured_hexagonal_packing.geo`**:
+    - **Strategy**: Reduced (quarter-cell) model representing a periodic hexagonal packing arrangement.
+    - **Physical Groups**:
+        - `Top`: Top boundary + top-left fiber arc.
+        - `Bottom`: Bottom boundary + bottom-right fiber arc.
+        - `Left`: Left boundary.
+        - `Right`: Right boundary.
+        - `Fluid_Domain`: The 2D flow surface.
+- **`2D_unstructured_half_fiber.geo`**:
+    - **Strategy**: Half-cell model representing a periodic square packing arrangement.
+    - **Symmetry**: Contains a half-fiber centered on the top boundary.
+    - **Physical Groups**:
+        - `Top`: Top boundary + top fiber arc.
+        - `Bottom`: Bottom boundary.
+        - `Left`: Left boundary.
+        - `Right`: Right boundary.
+        - `Fluid_Domain`: The 2D flow surface.
 
 ### 3. Automation & Assets
 - **`generate_meshes.sh`**: A utility script to sweep through different volume fractions (`vf`) while maintaining a constant number of elements (`n`) in the gap.
@@ -43,20 +66,20 @@ Designed specifically for fluid dynamics (CFD) where shear rates vary across the
 #### Manual Generation
 To generate a 2D mesh manually:
 ```bash
-gmsh -2 2D_unstructured_quarter_fiber.geo
+gmsh -2 2D_unstructured_quarter_fiber.geo -o meshes/2D_unstructured_quarter_fiber.msh
 ```
 
 To override parameters (e.g., Fiber Volume Fraction `vf` or number of elements in the gap `n`):
 ```bash
-gmsh -2 2D_unstructured_quarter_fiber.geo -setnumber vf 0.5 -setnumber n 10 -o output.msh
+gmsh -2 2D_unstructured_quarter_fiber.geo -setnumber vf 0.5 -setnumber n 10 -o meshes/output.msh
 ```
 
 #### Batch Generation
-Use the provided bash script to generate a set of unstructured meshes for `vf = [0.4, 0.45, 0.5, 0.55, 0.6, 0.65]`:
+Use the provided bash script to generate a set of unstructured meshes for `vf = [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65]`:
 ```bash
 ./generate_meshes.sh [n]
 ```
-Where `[n]` is an optional argument for the number of elements in the narrowest gap (default is 5).
+Where `[n]` is an optional argument for the number of elements in the narrowest gap (default is 5). The generated meshes will be saved in the `meshes/` folder.
 
 ## Key Parameters
 
