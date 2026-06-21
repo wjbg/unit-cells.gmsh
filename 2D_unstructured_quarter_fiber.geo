@@ -39,7 +39,7 @@ lc_global = lc_refine * 4; // Global size is 4x coarser than the gap refinement
 Point(1) = {0, 0, 0, lc_global};
 
 // Points on the domain boundary
-Point(2) = {0, H, 0, lc_refine}; // Top-left corner (Finest)
+point(2) = {0, H, 0, lc_refine}; // Top-left corner (Finest)
 Point(3) = {W, H, 0, lc_global}; // Top-right corner (Allowed to be coarser)
 Point(4) = {W, 0, 0, lc_global}; // Bottom-right corner
 

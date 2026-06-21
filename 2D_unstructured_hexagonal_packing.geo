@@ -38,7 +38,7 @@ H = P * Sqrt(3) / 2;
 // The narrowest gap distance between the fiber centers is P - 2*R.
 // We want n elements in this gap.
 gap = P - 2 * R;
-lc_refine = gap / n;
+lc_refine = (gap / n) / 1.5;  // Correction to make sq and hex comparable
 lc_global = lc_refine * 4; // Global size is 4x coarser than the gap refinement
 
 // Default characteristic length for points
